@@ -1,5 +1,4 @@
 
-
 OSGeo-Live example
 ==================
 
@@ -42,23 +41,6 @@ directly in the OSGeo-Live virtual machine::
     http://localhost/en/quickstart/qgis_mapserver_quickstart.html
 
 
-Explanation of the WMS URL request
-----------------------------------
-
-The first part is the address of QGIS server::
-
-    http://localhost/cgi-bin/qgis_mapserv
-
-The value of ``map`` property specifies where is the QGIS project file
-placed on the hard drive::
-
-    map=/home/user/world.qgs
-
-The other properties are standard parts of WMS request. You can change
-the size of the image, coordinate reference system, displayed area
-(bounding box) and image format.
-
-
 Preparing project in QGIS
 =========================
 
@@ -97,11 +79,14 @@ Then, still in *Project Properties*, go to *OWS Server* and set some of
 *WMS capabilities*.
 
 
-QGIS Server
-===========
+Using QGIS Server
+=================
 
 This section describes how to publish existing QGIS project using
 QGIS Server.
+
+Preparing the data for the server
+---------------------------------
 
 Create a new directory (here ``alaska``) in ``cgi-bin`` directory
 (e.g. ``/usr/lib/cgi-bin/`` on Ubuntu) for the project
@@ -122,22 +107,48 @@ You need to copy it whenever you changed the file. Alternatively, you
 can create a symbolic link. You don't need to copy the data if the
 project is using absolute paths (can be changed in project properties).
 
+
+Getting data from the server
+----------------------------
+
 Check that server works and your project is correct using
 ``GetCapabilities`` request::
 
-    http://localhost/cgi-bin/alaska/qgis_mapserv.fcgi?request=GetCapabilities&SERVICE=WMS&VERSION=1.3.0
+    http://localhost/cgi-bin/alaska/qgis_mapserv.fcgi?request=GetCapabilities&SERVICE=WMS&VERSION=1.1.1
 
 You can also do the WMS ``GetMap`` request::
 
     http://localhost/cgi-bin/alaska/qgis_mapserv.fcgi?service=WMS&request=GetMap&version=1.1.1&layers=alaska&styles=&format=image/png&transparent=true&height=256&width=256&srs=EPSG:2964&bbox=-7876621.70568871777504683,-985954.85252842528279871,8006823.47062830720096827,9525393.15944263152778149
 
+The maximum coordinates extent we can use is in the ``GetCapabilities`` response.
 
-Coordinates of the extent in the 
+Alternative way of specifing the QGIS project
+---------------------------------------------
 
+Alternatively, we don't need to copy the QGIS project file.
+It is enough just to specify the ``map`` parameter in the request::
 
     http://localhost/cgi-bin/qgis_mapserv.fcgi?map=/usr/lib/cgi-bin/alaska/alaska.qgs&request=GetCapabilities&SERVICE=WMS&VERSION=1.3.0
 
-    http://localhost/cgi-bin/qgis_mapserv.fcgi?service=WMS&version=1.3.0&request=GetCapabilities
+
+Explanation of the WMS URL request
+----------------------------------
+
+The first part is the address of QGIS server::
+
+    http://localhost/cgi-bin/qgis_mapserv.fcgi
+    http://localhost/cgi-bin/qgis_mapserv
+
+The adress or the suffix can differ depending on the installation.
+
+The value of ``map`` property specifies where is the QGIS project file
+placed on the hard drive::
+
+    map=/home/user/world.qgs
+
+The other properties are standard parts of WMS request. You can change
+the size of the image, coordinate reference system, displayed area
+(bounding box) and image format in examples provided in this document.
 
 
 QGIS Web Client

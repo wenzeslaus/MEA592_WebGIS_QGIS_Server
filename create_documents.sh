@@ -2,5 +2,3 @@
 
 pandoc --from=rst --to=html --toc --css=style.css --output=qgis_server_assignment.html qgis_server_assignment.rst
 
-pandoc --from=rst --to=html --toc --css=style.css --output=leaflet_basics_lecture.html leaflet_basics_lecture.rst
-

@@ -413,6 +413,9 @@ http://www.qgiscloud.com/esevens/wms_dossierinfo.
 Appendix: Installing latest QGIS on Ubuntu
 ==========================================
 
+This section provides some pointers how to install latest QGIS including
+QGIS Server on Ubuntu.
+
 Add a key to identify the identity the repository using command line::
 
     gpg --keyserver keyserver.ubuntu.com --recv 47765B75
@@ -425,8 +428,28 @@ If you don't do it you will get something similar to::
 
     ...The following signatures couldn't be verified...
 
-The installation is described in QGIS official sources but currently the
-better description is available at
+When installing on Ubuntu 12.04, add these line to you repository sources::
+
+    deb http://qgis.org/ubuntugis-nightly precise main
+    deb-src http://qgis.org/ubuntugis-nightly precise main
+
+You may need to add also::
+
+    deb http://ppa.launchpad.net/ubuntugis/ubuntugis-unstable/ubuntu precise main
+
+Then run::
+
+    sudo apt-get update
+    sudo apt-get install qgis python-qgis qgis-mapserver
+    sudo apt-get install libapache2-mod-fcgid
+
+Restart Apache::
+
+    sudo /etc/init.d/apache2 restart
+
+The installation is described in QGIS official sources at
+http://www.qgis.org/en/site/forusers/alldownloads.html but a good
+description is available also at
 http://anitagraser.com/2012/03/30/qgis-server-on-ubuntu-step-by-step/
 for Ubuntu and at
 http://anitagraser.com/2012/04/06/qgis-server-on-windows7-step-by-step/

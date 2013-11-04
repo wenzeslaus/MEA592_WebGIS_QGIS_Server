@@ -1,3 +1,16 @@
+Introduction
+============
+
+In this assignment we will publish data on web using QGIS. We will
+use QGIS Desktop for preparing data for QGIS Server. Then we will
+look at the result using QGIS Web Client, Leaflet web page, and
+pure WMS request. The section OSGeo-Live example shows a simple
+usage of QGIS Server when everything is configured. The OSGeo-Live should
+be used for this example. The other sections describe everything in
+detail including the configuration of QGIS Web Client. Unfortunately,
+QGIS Web Client example does not work on the OSGeo-Live 7.0 because
+it has too old QGIS version.
+
 
 OSGeo-Live example
 ==================
@@ -122,6 +135,7 @@ You can also do the WMS ``GetMap`` request::
 
 The maximum coordinates extent we can use is in the ``GetCapabilities`` response.
 
+
 Alternative way of specifing the QGIS project
 ---------------------------------------------
 
@@ -154,34 +168,48 @@ the size of the image, coordinate reference system, displayed area
 QGIS Web Client
 ===============
 
-This section describes how to 
-
-sudo a2enmod rewrite
-sudo a2ensite qgis-web-client.conf
-sudo /etc/init.d/apache2 reload
+This section describes how to setup a QGIS Web Client web page. Commands
+provided here applies to Ubuntu.
 
 Download and uncompress the latest QGIS Web Client::
 
-    wget https://github.com/qgis/QGIS-Web-Client/archive/master.zip
-    unzip /home/vasek/Downloads/QGIS-Web-Client-master.zip
+    wget https://github.com/qgis/QGIS-Web-Client/archive/master.zip --output-file=QGIS-Web-Client.zip
+    unzip QGIS-Web-Client.zip
 
-Do the changes in your space and copy to server only once finished::
+Alternatively, use https://github.com/qgis/QGIS-Web-Client and download
+a ZIP file there and than uncompress in file manager.
 
-    sudo cp -r QGIS-Web-Client-master/ /var/www/
+Go to the newly created ``QGIS-Web-Client`` directory and use some file
+templates to configure the web page (here we just copy the prepared
+templates)::
 
-    sudo cp ~/Desktop/qgis-projs/alaska.qgs /usr/lib/cgi-bin/alaska
-    
+    cd QGIS-Web-Client
+    cp apache-conf/qgis-web-client.conf.tmpl apache-conf/qgis-web-client.conf
+    cp site/js/GlobalOptions.js.templ-3857 site/js/GlobalOptions.js
+    ln -s -f /usr/lib/cgi-bin/qgis_mapserv.fcgi cgi-bin/qgis_mapserv.fcgi
 
-cp apache-conf/qgis-web-client.conf.tmpl apache-conf/qgis-web-client.conf
+You can do some other changes to the web site but we will just copy files
+to the server space::
 
-cp site/js/GlobalOptions.js.templ-3857 site/js/GlobalOptions.js
+    cd ..
+    sudo cp -r QGIS-Web-Client/ /var/www/
 
-cd /etc/apache2/sites-available/
-sudo ln -s /home/vasek/dev/test/QGIS-Web-Client-master/apache-conf/qgis-web-client.conf
+Maybe, you need to enable Apache module and Apache site using the
+following commands::
 
-http://localhost/QGIS-Web-Client-master/site/qgiswebclient.html?map=/usr/lib/cgi-bin/alaska/alaska.qgs
+    cd /etc/apache2/sites-available/
+    sudo ln -s /var/www/QGIS-Web-Client/apache-conf/qgis-web-client.conf
+    sudo a2enmod rewrite
+    sudo a2ensite qgis-web-client.conf
+    sudo /etc/init.d/apache2 reload
 
-If you have some problems you may want to see Apache log, e.g. using
+And now assuming that we have the QGIS project file ``alaska.qgs`` in
+``/usr/lib/cgi-bin/alaska``, we can initialize QGIS client using the
+project file::
+
+    http://localhost/QGIS-Web-Client/site/qgiswebclient.html?map=/usr/lib/cgi-bin/alaska/alaska.qgs
+
+If you have some problems, you may want to see Apache log, e.g. using
 ``tail`` command to get the last messages::
 
     tail /var/log/apache2/error.log 

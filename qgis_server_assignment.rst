@@ -271,6 +271,7 @@ reasons.
 This will create a one Leaflet WMS layer for provided layers ``alaska``
 and ``grassland``. Alternatively, we can create one Leaflet WMS layer
 for each provided layer by specifying the values of ``layers`` option.
+The layers we provided are ``alaska``, ``grassland``, and ``SR_50M_alaska_nad``.
 The documentation for Leaflet WMS Layer class can be found at
 http://leafletjs.com/reference.html#tilelayer-wms.
 
@@ -317,6 +318,13 @@ Then, in the output XML, find (geographical) bounding box of the layer.
 Then we can set the option values of the ``map`` object, namely
 ``center`` and ``zoom``, to values derived or guessed from geographical
 bounding box.
+
+If we want this example to work with OSGeo-Live example with world map,
+we need to set the WMS server URL to::
+
+    http://localhost/cgi-bin/qgis_mapserv?map=/home/user/world.qgs
+
+The only provided layer is ``ne_10m_admin_0_countries``.
 
 An alternative Leaflet and QGIS Server example is available at
 http://anitagraser.com/category/gis/qgis-server/.

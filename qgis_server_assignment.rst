@@ -218,7 +218,20 @@ If you have some problems, you may want to see Apache log, e.g. using
 QGIS Server and Leaflet
 =======================
 
-example-one-overlay.html
+This section describes how to visualize data from QGIS Server using
+Leaflet and WMS.
+
+We need the Leaflet web page sample file ``leaflet-web-page.html``
+which we will modify.
+
+At first we need to create a WMS layer. It is necessary to specify
+the URL of the server. Depending on how you added your project to server
+it would be ``cgi-bin/alaska/qgis_mapserv.fcgi`` or
+``cgi-bin/alaska/qgis_mapserv.fcgi`` with
+``?map=/usr/lib/cgi-bin/alaska/alaska.qgs``. Than we need to specify
+layers, format (we choose PNG) and whether we want image to be
+transparent. Usually, we also need to specify attribution for legal
+reasons.
 
 ::
 

@@ -1,0 +1,31 @@
+--- leaflet-web-page.html	2013-11-03 23:56:21.470791707 -0500
++++ leaflet-web-page-wms.html	2013-11-03 23:52:52.161969202 -0500
+@@ -38,6 +38,14 @@
+         var mapquestAttrib = 'Imagery &copy; <a href="http://open.mapquest.co.uk" target="_blank">MapQuest</a>';
+         var mapquestLayer = new L.TileLayer(mapquestUrl, {maxZoom: 18, attribution: mapquestAttrib, subdomains: subDomains});
+ 
++        // create WMS layer
++        var wmsLayer = L.tileLayer.wms("http://localhost/cgi-bin/alaska/qgis_mapserv.fcgi", {
++            layers: 'alaska,grassland',
++            format: 'image/png',
++            transparent: true,
++            attribution: "&copy; QGIS sample dataset"
++        });
++
+         // map center
+         var mapCenter = [35.950953065, -75.6190280288889];
+ 
+@@ -47,11 +55,12 @@
+         var map = L.map('map', {
+             center: mapCenter,
+             zoom: 3,
+-            layers: [osmLayer]
++            layers: [osmLayer, wmsLayer]
+         });
+ 
+         // create list of overlay layers
+         var overlayLayers = {
++            "WMS QGIS Layer": wmsLayer
+         };
+ 
+         // create list of overlay layers

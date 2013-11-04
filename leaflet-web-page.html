@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet web page</title>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+        }
+    </style>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" /><![endif]-->
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+    <script>
+
+        // create OpenStreetMap layer
+        var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            minZoom: 1,
+            maxZoom: 18,
+            attribution: 'Map data &copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC BY-SA</a>'
+        });
+
+        // create MapQuest layer
+        var mapquestUrl = 'http://oatile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png';
+        var subDomains = '1234';
+        var mapquestAttrib = 'Imagery &copy; <a href="http://open.mapquest.co.uk" target="_blank">MapQuest</a>';
+        var mapquestLayer = new L.TileLayer(mapquestUrl, {maxZoom: 18, attribution: mapquestAttrib, subdomains: subDomains});
+
+        // map center
+        var mapCenter = [35.950953065, -75.6190280288889];
+
+        // create map object
+        // setting default map position and zoom
+        // adding layers
+        var map = L.map('map', {
+            center: mapCenter,
+            zoom: 3,
+            layers: [osmLayer]
+        });
+
+        // create list of overlay layers
+        var overlayLayers = {
+        };
+
+        // create list of overlay layers
+        var baseLayers = {
+            "OpenStreetMap": osmLayer,
+            "MapQuest": mapquestLayer
+        };
+
+        // create layer control
+        // first parameter are base layers
+        // second parameter are overlay layers
+        var layerControl = L.control.layers(baseLayers, overlayLayers);
+
+        // add layer control to the map object
+        layerControl.addTo(map)
+
+    </script>
+</body>
+</html>
+

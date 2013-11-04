@@ -232,7 +232,7 @@ project file::
 If you have some problems, you may want to see Apache log, e.g. using
 ``tail`` command to get the last messages::
 
-    tail /var/log/apache2/error.log 
+    tail /var/log/apache2/error.log
 
 The repository for QGIS Web Client is available at
 https://github.com/qgis/QGIS-Web-Client and the documentation
@@ -406,7 +406,7 @@ behind it).
 How to use the service is described at
 http://www.qgiscloud.com/en/pages/quickstart.
 The basic information are available at the service web site and the
-description from the technical point is in FOSS4G 
+description from the technical point is in FOSS4G
 *QGIS Server, QGIS Web Client And QGIS Cloud* presentation abstract
 available at http://2013.foss4g.org/conf/programme/presentations/137/.
 
@@ -504,7 +504,7 @@ and WMS 1.3.0 in those cases. For instance, with EPSG:3857 (Google
 Mercator projection in meters), the BBOX coordinate order remains the
 same for both WMS 1.1.1 and WMS 1.3.0::
 
-      BBOX=xmin,ymin,xmax,ymax 
+      BBOX=xmin,ymin,xmax,ymax
 
 We can see some criticism to these changes at some places, e.g. at
 http://dmorissette.blogspot.com/2012/12/dont-upgrade-to-wms-130-unless-you.html.

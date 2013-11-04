@@ -225,7 +225,9 @@ following commands::
 
 And now assuming that we have the QGIS project file ``alaska.qgs`` in
 ``/usr/lib/cgi-bin/alaska``, we can initialize QGIS client using the
-project file::
+project file:
+
+::
 
     http://localhost/QGIS-Web-Client/site/qgiswebclient.html?map=/usr/lib/cgi-bin/alaska/alaska.qgs
 

@@ -53,6 +53,9 @@ directly in the OSGeo-Live virtual machine::
 
     http://localhost/en/quickstart/qgis_mapserver_quickstart.html
 
+The page contains similar example as described here and is available
+online at http://live.osgeo.org/en/quickstart/qgis_mapserver_quickstart.html.
+
 
 Preparing project in QGIS
 =========================
@@ -136,8 +139,8 @@ You can also do the WMS ``GetMap`` request::
 The maximum coordinates extent we can use is in the ``GetCapabilities`` response.
 
 
-Alternative way of specifing the QGIS project
----------------------------------------------
+Alternative way of specifying the QGIS project
+----------------------------------------------
 
 Alternatively, we don't need to copy the QGIS project file.
 It is enough just to specify the ``map`` parameter in the request::
@@ -163,6 +166,23 @@ placed on the hard drive::
 The other properties are standard parts of WMS request. You can change
 the size of the image, coordinate reference system, displayed area
 (bounding box) and image format in examples provided in this document.
+
+
+Links
+-----
+
+* Official documentation, http://www.qgis.org/en/docs/user_manual/working_with_ogc/ogc_server_support.html
+* Original QGIS Server site, http://karlinapp.ethz.ch/qgis_wms/index.html
+* QGIS Server tutorial, http://hub.qgis.org/projects/quantum-gis/wiki/QGIS_Server_Tutorial
+* QGIS Server and QGIS Web Client examples, http://gis.uster.ch/
+
+Because we are using the nightly builds of QGIS Server it is advisable
+to have links to issue tracking available:
+
+* http://www.qgis.org/en/site/getinvolved/development/index.html#bugs-features-and-issues
+* http://hub.qgis.org/wiki/quantum-gis/Bugreports
+* http://hub.qgis.org/projects/quantum-gis/issues
+* http://lists.osgeo.org/mailman/listinfo/qgis-developer
 
 
 QGIS Web Client
@@ -214,6 +234,10 @@ If you have some problems, you may want to see Apache log, e.g. using
 
     tail /var/log/apache2/error.log 
 
+The repository for QGIS Web Client is available at
+https://github.com/qgis/QGIS-Web-Client and the documentation
+at https://github.com/qgis/QGIS-Web-Client/blob/master/README.pdf?raw=true.
+
 
 QGIS Server and Leaflet
 =======================
@@ -244,13 +268,37 @@ reasons.
         }
     );
 
-http://leafletjs.com/reference.html#tilelayer-wms
+This will create a one Leaflet WMS layer for provided layers ``alaska``
+and ``grassland``. Alternatively, we can create one Leaflet WMS layer
+for each provided layer by specifying the values of ``layers`` option.
+The documentation for Leaflet WMS Layer class can be found at
+http://leafletjs.com/reference.html#tilelayer-wms.
 
-http://anitagraser.com/category/gis/qgis-server/
+To show the layer at the beginning, we need to add it to the ``map``
+object initial layers::
 
+    var map = L.map('map', {
+        // ...
+        layers: [osmLayer, wmsLayer]
+    });
 
-http://live.osgeo.org/en/quickstart/qgis_mapserver_quickstart.html
-http://live.osgeo.org/
+To allow user to control whether layer is visible we will add the layer
+to overlay layers and add the list to layer ``control`` object::
+
+    // var baseLayers = ...
+
+    var overlayLayers = {
+        "WMS QGIS Layer": wmsLayer
+    };
+
+    var layerControl = L.control.layers(baseLayers, overlayLayers);
+
+It is better if the map is zoomed to the area of the map, not perfect
+but simple way is to view ``GetCapabilities`` using URL similar to this::
+
+    http://localhost/cgi-bin/qgis_mapserv.fcgi?map=/usr/lib/cgi-bin/alaska/alaska.qgs&request=GetCapabilities&SERVICE=WMS&VERSION=1.1.1
+
+Then, in the output XML, find (geographical) bounding box of the layer.
 
 ::
 
@@ -266,30 +314,23 @@ http://live.osgeo.org/
      <BoundingBox CRS="EPSG:2964" maxx="8.00682e+06" minx="-7.87662e+06" maxy="9.52539e+06" miny="-985955"/>
     </Layer>
 
-For OpenLayers example, see the OSGeo-Live documentation at
+Then we can set the option values of the ``map`` object, namely
+``center`` and ``zoom``, to values derived or guessed from geographical
+bounding box.
+
+An alternative Leaflet and QGIS Server example is available at
+http://anitagraser.com/category/gis/qgis-server/.
+
+There is also an OpenLayers example in the OSGeo-Live documentation at
 http://live.osgeo.org/en/quickstart/openlayers_quickstart.html.
-
-
-
-Links
-=====
-
-* http://hub.qgis.org/projects/quantum-gis/wiki/QGIS_Server_Tutorial
-* http://www.qgis.org/en/site/getinvolved/development/index.html#bugs-features-and-issues
-* http://hub.qgis.org/wiki/quantum-gis/Bugreports
-* http://hub.qgis.org/projects/quantum-gis/issues
-* http://www.qgis.org/en/docs/user_manual/working_with_ogc/ogc_server_support.html
-* http://gis.uster.ch/
-* http://karlinapp.ethz.ch/qgis_wms/index.html
-* http://live.osgeo.org/en/quickstart/qgis_mapserver_quickstart.html
-
-QGIS Web Client:
-* https://github.com/qgis/QGIS-Web-Client
-* https://github.com/qgis/QGIS-Web-Client/blob/master/README.pdf?raw=true
 
 
 Appendix: Download and run OSGeo-Live
 =====================================
+
+This section describes how to run OSGeo-Live operating system which
+allows to try almost all free and open source GIS software. More
+information are available at http://live.osgeo.org/.
 
 You will need at least 10 GB but better 20 GB of free space on your hard
 drive (note that you cannot use FAT32 file system).

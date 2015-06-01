@@ -515,9 +515,9 @@ http://dmorissette.blogspot.com/2012/12/dont-upgrade-to-wms-130-unless-you.html.
 License
 =======
 
-This work by Václav Petráš is licensed under a Creative Commons
-Attribution-ShareAlike 3.0 Unported License,
-http://creativecommons.org/licenses/by-sa/3.0/.
+This work by Vaclav Petras is licensed under a Creative Commons
+Attribution-ShareAlike 4.0 International License,
+http://creativecommons.org/licenses/by-sa/4.0/.
 
 The appendix “Download and run OSGeo-Live” includes content from
 the “OSGeo-Live Quickstart for Running in a Virtual Machine” created by
